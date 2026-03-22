@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  core-engine:
+    build:
+      context: ../core-engine
+      dockerfile: ../deployments/docker/Dockerfile.core
+    container_name: pinetcore-core
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    volumes:
+      - ./configs:/app/configs
+      - ./logs:/app/logs
+      - db:/app/data
+    environment:
+      - RUST_LOG=info
+      - DATABASE_URL=sqlite://data/pinetcore.db
+
+  dashboard:
+    build:
+      context: ../dashboard
+      dockerfile: ../deployments/docker/Dockerfile.ui
+    container_name: pinetcore-dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - core-engine
+    environment:
+      - VITE_API_URL=http://localhost:8080
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pinetcore-pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8081:80"
+    environment:
+      TZ: 'UTC'
+      WEBPASSWORD: 'admin'
+    volumes:
+      - ./volumes/pihole:/etc/pihole
+      - ./volumes/dnsmasq.d:/etc/dnsmasq.d
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: pinetcore-grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./deployments/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
+
+volumes:
+  db:
+  grafana-data:
+

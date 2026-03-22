@@ -1,0 +1,15 @@
+[Unit]
+Description=PiNetCore Core Engine
+After=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/pinetcore/core-engine
+ExecStart=/opt/pinetcore/core-engine/target/aarch64-unknown-linux-gnu/release/pinetcore-core config.yaml
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+

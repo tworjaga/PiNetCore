@@ -1,0 +1,17 @@
+FROM rust:1.80-slim as builder
+
+WORKDIR /app
+COPY core-engine /app/core-engine
+WORKDIR /app/core-engine
+RUN cargo build --release
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y sqlite3 nftables libssl3 && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY --from=builder /app/core-engine/target/release/pinetcore-core /app/
+COPY core-engine/config.yaml /app/
+COPY configs /app/configs
+
+CMD ["/app/pinetcore-core", "config.yaml"]
+
