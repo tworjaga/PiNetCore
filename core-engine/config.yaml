@@ -1,0 +1,12 @@
+database_url: "sqlite://pinetcore.db"
+api_port: 8080
+log_level: "info"
+
+capture:
+  interface: "eth0"
+  promiscuous: true
+
+firewall:
+  enabled: false
+  nftables_path: "/usr/sbin/nft"
+
