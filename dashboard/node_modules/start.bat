@@ -1,0 +1,47 @@
+@echo off
+title SecureMySite - Security Analyzer
+echo ==========================================
+echo   SecureMySite - Security Analyzer
+echo ==========================================
+echo.
+
+:: Check if Python is available
+python --version >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: Python is not installed or not in PATH
+    echo Please install Python 3.11+ from https://python.org
+    pause
+    exit /b 1
+)
+
+:: Check if virtual environment exists, create if not
+if not exist ".venv" (
+    echo Creating virtual environment...
+    python -m venv .venv
+    if errorlevel 1 (
+        echo ERROR: Failed to create virtual environment
+        pause
+        exit /b 1
+    )
+)
+
+:: Activate virtual environment
+call .venv\Scripts\activate.bat
+
+:: Install/update dependencies
+echo Checking dependencies...
+pip install -q -r requirements.txt
+if errorlevel 1 (
+    echo ERROR: Failed to install dependencies
+    pause
+    exit /b 1
+)
+
+:: Launch application
+echo.
+echo Starting SecureMySite...
+echo.
+python main.py
+
+:: Deactivate on exit
+call deactivate
