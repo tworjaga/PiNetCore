@@ -5,6 +5,7 @@
 [![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)](https://www.rust-lang.org)
 [![Docker](https://img.shields.io/badge/Docker-ARM-blue.svg)](https://www.docker.com)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://react.dev)
+<img src="https://visitor-badge.laobi.icu/badge?page_id=tworjaga.PiNetCore&"  />
 
 ## Overview
 
