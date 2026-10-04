@@ -7,7 +7,7 @@
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://react.dev)
 <img src="https://visitor-badge.laobi.icu/badge?page_id=tworjaga.PiNetCore&"  />
 
-## Overview
+## Overview  [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tworjaga/PiNetCore)
 
 PiNetCore is a production-ready network appliance for Raspberry Pi 5. Full router control, real-time packet logging, nftables firewall, modular plugins (WireGuard VPN, Pi-hole DNS, Suricata IDS), React dashboard with live metrics.
 
